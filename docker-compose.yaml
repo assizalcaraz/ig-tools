@@ -12,6 +12,9 @@ services:
     networks:
       - instagram-network
     command: npm run dev -- --host 0.0.0.0 --port 3000
+    volumes:
+      - ./app-shell:/app           # código fuente en caliente
+      - /app/node_modules          # mantiene node_modules dentro del contenedor
 
   scraper-backend:
     build: ./scraper/backend

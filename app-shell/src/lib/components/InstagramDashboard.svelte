@@ -75,6 +75,18 @@
 		}
 	] : [];
 
+	$: contentInteractions = data?.insights?.contentInteractions;
+	$: contentStatsMap = contentInteractions?.organic_insights_interactions?.[0]?.string_map_data;
+	$: contentCards = contentStatsMap ? [
+		{
+			title: 'Interacciones con el contenido',
+			value: contentStatsMap['Interacciones con el contenido']?.value || '0',
+			change: contentStatsMap['Diferencia de interacciones con el contenido']?.value || '',
+			icon: 'activity',
+			color: 'var(--info-color)'
+		}
+	] : [];
+
 	onMount(async () => {
 		try {
 			loading = true;
@@ -151,6 +163,18 @@
 			</section>
 		{/if}
 
+		<!-- Estadísticas de interacciones de contenido -->
+		{#if contentCards.length > 0}
+			<section class="stats-section">
+				<h2>Interacciones de Contenido</h2>
+				<div class="grid grid-cols-3">
+					{#each contentCards as stats}
+						<StatsCard {stats} />
+					{/each}
+				</div>
+			</section>
+		{/if}
+
 		<!-- Análisis de Seguimiento -->
 		<FollowAnalysis 
 			followers={data.connections.followers}
@@ -210,7 +234,7 @@
 	.stats-section,
 	.connections-section,
 	.profile-section {
-		margin-bottom: var(--spacing-xl);
+		margin-bottom: calc(var(--spacing-xl) * 1.5);
 	}
 
 	.stats-section h2,
