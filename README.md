@@ -191,3 +191,20 @@ Si el app-shell no puede acceder a las apps:
 3. **Ver estado**: `make ps`
 4. **Detener**: `make down`
 5. **Limpiar**: `make clean` 
+
+## 📝 Notas
+
+- Cada módulo es completamente independiente
+- Los servicios se comunican a través de la red Docker
+- El dashboard puede conectarse al scraper para funcionalidades integradas
+- El app-shell proporciona navegación integrada para todos los módulos
+- Usa `make up-dev` para el desarrollo más rápido
+- El script `start.sh` permite selección interactiva de módulos
+
+## 🚀 Flujo de Trabajo Recomendado
+
+1. **Desarrollo**: `make up-dev`
+2. **Ver logs**: `make logs`
+3. **Ver estado**: `make ps`
+4. **Detener**: `make down`
+5. **Limpiar**: `make clean` 
