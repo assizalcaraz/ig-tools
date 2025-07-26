@@ -29,25 +29,29 @@
 			title: 'Seguidores',
 			value: data.connections?.followers?.length || 0,
 			icon: 'users',
-			color: 'var(--primary-color)'
+			color: 'var(--primary-color)',
+			users: extractUsersFromData(data.connections.followers)
 		},
 		{
 			title: 'Siguiendo',
 			value: data.connections?.following?.length || 0,
 			icon: 'users',
-			color: 'var(--secondary-color)'
+			color: 'var(--secondary-color)',
+			users: extractUsersFromData(data.connections.following)
 		},
 		{
 			title: 'Amigos Cercanos',
 			value: data.connections?.closeFriends?.length || 0,
 			icon: 'users',
-			color: 'var(--accent-color)'
+			color: 'var(--accent-color)',
+			users: extractUsersFromData(data.connections.closeFriends)
 		},
 		{
 			title: 'Perfiles Bloqueados',
 			value: data.connections?.blockedProfiles?.length || 0,
 			icon: 'users',
-			color: 'var(--error-color)'
+			color: 'var(--error-color)',
+			users: extractUsersFromData(data.connections.blockedProfiles)
 		}
 	] : [];
 
@@ -79,11 +83,32 @@
 	$: contentStatsMap = contentInteractions?.organic_insights_interactions?.[0]?.string_map_data;
 	$: contentCards = contentStatsMap ? [
 		{
-			title: 'Interacciones con el contenido',
+			title: 'Interacciones Totales',
 			value: contentStatsMap['Interacciones con el contenido']?.value || '0',
 			change: contentStatsMap['Diferencia de interacciones con el contenido']?.value || '',
 			icon: 'activity',
-			color: 'var(--info-color)'
+			color: 'var(--primary-color)'
+		},
+		{
+			title: 'Reels',
+			value: contentStatsMap['Interacciones con reels']?.value || '0',
+			change: contentStatsMap['Diferencia de interacciones con los reels']?.value || '',
+			icon: 'video',
+			color: 'var(--accent-color)'
+		},
+		{
+			title: 'Historias',
+			value: contentStatsMap['Interacciones con historias']?.value || '0',
+			change: contentStatsMap['Diferencia de interacciones con las historias']?.value || '',
+			icon: 'eye',
+			color: 'var(--secondary-color)'
+		},
+		{
+			title: 'Publicaciones',
+			value: contentStatsMap['Interacciones con publicaciones']?.value || '0',
+			change: contentStatsMap['Diferencia de interacciones con las publicaciones']?.value || '',
+			icon: 'bar-chart3',
+			color: 'var(--success-color)'
 		}
 	] : [];
 
@@ -146,7 +171,7 @@
 			<h2>Estadísticas Generales</h2>
 			<div class="grid grid-cols-4">
 				{#each statsCards as stats}
-					<StatsCard {stats} />
+					<StatsCard {stats} users={stats.users} maxItems={5} />
 				{/each}
 			</div>
 		</section>
@@ -167,7 +192,7 @@
 		{#if contentCards.length > 0}
 			<section class="stats-section">
 				<h2>Interacciones de Contenido</h2>
-				<div class="grid grid-cols-3">
+				<div class="grid grid-cols-4">
 					{#each contentCards as stats}
 						<StatsCard {stats} />
 					{/each}
@@ -181,32 +206,7 @@
 			following={data.connections.following}
 		/>
 
-		<!-- Conexiones -->
-		<section class="connections-section">
-			<h2>Conexiones</h2>
-			<div class="grid grid-cols-2">
-				<UserList 
-					title="Seguidores Recientes" 
-					users={extractUsersFromData(data.connections.followers)}
-					maxItems={5}
-				/>
-				<UserList 
-					title="Siguiendo" 
-					users={extractUsersFromData(data.connections.following)}
-					maxItems={5}
-				/>
-				<UserList 
-					title="Amigos Cercanos" 
-					users={extractUsersFromData(data.connections.closeFriends)}
-					maxItems={5}
-				/>
-				<UserList 
-					title="Perfiles Bloqueados" 
-					users={extractUsersFromData(data.connections.blockedProfiles)}
-					maxItems={5}
-				/>
-			</div>
-		</section>
+		<!-- Conexiones eliminadas: ahora las listas se muestran dentro de las tarjetas -->
 
 		<!-- Información Personal -->
 		{#if data.personalInformation.profileInformation}
@@ -296,4 +296,8 @@
 			padding: var(--spacing-md);
 		}
 	}
+    /* Ajuste de separación entre las tarjetas dentro de la sección de estadísticas */
+    .stats-section .grid {
+        gap: var(--spacing-lg);
+    }
 </style> 
