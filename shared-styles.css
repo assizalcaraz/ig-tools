@@ -1,4 +1,4 @@
-/* Variables CSS globales unificadas */
+/* Variables CSS unificadas para todas las aplicaciones */
 :root {
   /* Colores principales */
   --primary-color: #0095f6;
@@ -7,46 +7,36 @@
   --secondary-color: #8e8e93;
   --accent-color: #833ab4;
   
-  /* Colores de texto */
-  --text-primary: #262626;
-  --text-secondary: #8e8e93;
-  --text-muted: #c7c7cc;
+  /* Texto */
+  --text-primary: #ffffff;
+  --text-secondary: #a8a8a8;
+  --text-muted: #737373;
   
-  /* Colores de fondo */
-  --bg-primary: #ffffff;
-  --bg-secondary: #fafafa;
-  --bg-tertiary: #f2f2f2;
+  /* Fondos */
+  --bg-primary: #000000;
+  --bg-secondary: #121212;
+  --bg-tertiary: #1a1a1a;
   
-  /* Colores de superficie */
-  --surface-color: #ffffff;
-  --surface-secondary: #f8f9fa;
-  --surface-hover: #f1f3f4;
+  /* Superficies */
+  --surface-color: #1a1a1a;
+  --surface-secondary: #262626;
+  --surface-hover: #333333;
   
-  /* Colores de borde */
-  --border-color: #dbdbdb;
-  --border-light: #efefef;
+  /* Bordes */
+  --border-color: #333333;
+  --border-light: #262626;
   
-  /* Colores de estado */
+  /* Estados */
   --success-color: #00c851;
   --error-color: #ff4444;
   --warning-color: #ffbb33;
   --info-color: #33b5e5;
   
-  /* Colores de fondo para estados */
-  --success-bg: #d4edda;
-  --error-bg: #f8d7da;
-  --warning-bg: #fff3cd;
-  --info-bg: #d1ecf1;
-  
-  /* Sombras */
-  --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-  
-  /* Bordes redondeados */
-  --border-radius: 8px;
-  --border-radius-sm: 4px;
-  --border-radius-lg: 12px;
+  /* Fondos de estados */
+  --success-bg: #1a3d1a;
+  --error-bg: #3d1a1a;
+  --warning-bg: #3d2e1a;
+  --info-bg: #1a2a3d;
   
   /* Espaciado */
   --spacing-xs: 0.25rem;
@@ -57,7 +47,7 @@
   --spacing-2xl: 3rem;
   
   /* Tipografía */
-  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
   --font-size-base: 1rem;
@@ -66,30 +56,20 @@
   --font-size-2xl: 1.5rem;
   --font-size-3xl: 1.875rem;
   
+  /* Bordes redondeados */
+  --border-radius-sm: 4px;
+  --border-radius: 8px;
+  --border-radius-lg: 12px;
+  
+  /* Sombras */
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3);
+  
   /* Transiciones */
   --transition-fast: 0.15s ease;
   --transition-normal: 0.2s ease;
   --transition-slow: 0.3s ease;
-}
-
-/* Tema oscuro */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text-primary: #ffffff;
-    --text-secondary: #a8a8a8;
-    --text-muted: #737373;
-    
-    --bg-primary: #000000;
-    --bg-secondary: #121212;
-    --bg-tertiary: #1a1a1a;
-    
-    --surface-color: #1a1a1a;
-    --surface-secondary: #262626;
-    --surface-hover: #333333;
-    
-    --border-color: #333333;
-    --border-light: #262626;
-  }
 }
 
 /* Estilos base */
@@ -112,6 +92,7 @@ body {
   font-size: var(--font-size-base);
   background-color: var(--bg-primary);
   color: var(--text-primary);
+  min-height: 100vh;
 }
 
 /* Mejoras de accesibilidad */
@@ -120,7 +101,7 @@ body {
   outline-offset: 2px;
 }
 
-/* Estilos para inputs mejorados */
+/* Estilos para inputs */
 input, textarea, select {
   font-family: inherit;
   font-size: inherit;
@@ -138,7 +119,7 @@ input:focus, textarea:focus, select:focus {
   outline: none;
 }
 
-/* Estilos para botones mejorados */
+/* Estilos para botones */
 button {
   font-family: inherit;
   cursor: pointer;
@@ -164,22 +145,22 @@ button {
 }
 
 .btn-primary {
-  background: var(--primary-color);
+  background-color: var(--primary-color);
   color: white;
 }
 
 .btn-primary:hover {
-  background: var(--primary-hover);
+  background-color: var(--primary-hover);
 }
 
 .btn-secondary {
-  background: transparent;
+  background-color: transparent;
   color: var(--primary-color);
   border: 1px solid var(--primary-color);
 }
 
 .btn-secondary:hover {
-  background: var(--primary-color);
+  background-color: var(--primary-color);
   color: white;
 }
 
@@ -194,52 +175,9 @@ a:hover {
   color: var(--primary-hover);
 }
 
-/* Utilidades de espaciado */
-.mt-1 { margin-top: var(--spacing-sm); }
-.mt-2 { margin-top: var(--spacing-md); }
-.mt-3 { margin-top: var(--spacing-lg); }
-.mt-4 { margin-top: var(--spacing-xl); }
-
-.mb-1 { margin-bottom: var(--spacing-sm); }
-.mb-2 { margin-bottom: var(--spacing-md); }
-.mb-3 { margin-bottom: var(--spacing-lg); }
-.mb-4 { margin-bottom: var(--spacing-xl); }
-
-.p-1 { padding: var(--spacing-sm); }
-.p-2 { padding: var(--spacing-md); }
-.p-3 { padding: var(--spacing-lg); }
-.p-4 { padding: var(--spacing-xl); }
-
-/* Utilidades de texto */
-.text-center { text-align: center; }
-.text-left { text-align: left; }
-.text-right { text-align: right; }
-
-.text-primary { color: var(--text-primary); }
-.text-secondary { color: var(--text-secondary); }
-.text-muted { color: var(--text-muted); }
-
-/* Utilidades de display */
-.flex { display: flex; }
-.flex-col { flex-direction: column; }
-.flex-row { flex-direction: row; }
-.items-center { align-items: center; }
-.justify-center { justify-content: center; }
-.justify-between { justify-content: space-between; }
-.gap-1 { gap: var(--spacing-sm); }
-.gap-2 { gap: var(--spacing-md); }
-.gap-3 { gap: var(--spacing-lg); }
-
-/* Utilidades de grid */
-.grid { display: grid; }
-.grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
-.grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-
 /* Card component */
 .card {
-  background: var(--surface-color);
+  background-color: var(--surface-color);
   border-radius: var(--border-radius);
   box-shadow: var(--shadow);
   padding: var(--spacing-lg);
@@ -269,14 +207,21 @@ a:hover {
   to { transform: rotate(360deg); }
 }
 
+/* Utility classes */
+.flex {
+  display: flex;
+}
+
+.grid {
+  display: grid;
+}
+
+.grid-cols-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
 /* Responsive */
 @media (max-width: 768px) {
-  .grid-cols-2,
-  .grid-cols-3,
-  .grid-cols-4 {
-    grid-template-columns: 1fr;
-  }
-  
   .container {
     padding: 0 var(--spacing-sm);
   }
