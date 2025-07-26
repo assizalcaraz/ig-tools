@@ -29,7 +29,7 @@ help:
 up-dev:
 	@echo "🚀 Iniciando Instagram Tools en modo desarrollo..."
 	@echo "📋 Perfiles: App Shell + Dashboard + Scraper"
-	@docker compose --profile shell --profile dashboard --profile scraper --profile scraper-ui up -d
+	@docker compose --profile web --profile scraper up -d
 	@echo ""
 	@echo "✅ Servicios iniciados correctamente!"
 	@echo ""

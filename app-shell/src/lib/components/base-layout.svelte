@@ -1,7 +1,7 @@
 <script>
   import '../shared-styles.css';
   
-  export let title = 'Instagram Dashboard';
+  export let title = 'Instagram Tools';
   export let showHeader = true;
   export let showSidebar = false;
   export let sidebarItems = [];

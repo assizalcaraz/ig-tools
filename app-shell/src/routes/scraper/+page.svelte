@@ -1,39 +1,8 @@
 <script>
-  import { onMount } from 'svelte';
-  
-  let iframeUrl = 'http://localhost:5173/scraper?parent=app-shell';
-  let loading = true;
-  let error = false;
-  
-  onMount(() => {
-    // Simular carga
-    setTimeout(() => {
-      loading = false;
-    }, 1000);
-  });
+  import InstagramScraper from '$lib/components/InstagramScraper.svelte';
 </script>
 
-<div class="scraper-page">
-  {#if loading}
-    <div class="loading">
-      <div class="loading-spinner"></div>
-      <p>Cargando Scraper...</p>
-    </div>
-  {:else if error}
-    <div class="error">
-      <h3>Error de Conexión</h3>
-      <p>No se pudo conectar con el Scraper. Asegúrate de que esté ejecutándose.</p>
-    </div>
-  {:else}
-    <iframe 
-      src={iframeUrl} 
-      class="iframe-container"
-      title="Instagram Scraper"
-      on:load={() => loading = false}
-      on:error={() => error = true}
-    />
-  {/if}
-</div>
+<InstagramScraper />
 
 <style>
   .scraper-page {

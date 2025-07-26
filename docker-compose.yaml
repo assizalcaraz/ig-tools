@@ -8,21 +8,10 @@ services:
     environment:
       - NODE_ENV=development
     profiles:
-      - shell
+      - web
     networks:
       - instagram-network
     command: npm run dev -- --host 0.0.0.0 --port 3000
-
-  dashboard:
-    build: ./dashboard_web
-    ports:
-      - "5174:5173"
-    environment:
-      - VITE_SCRAPER_API_URL=http://scraper-backend:8000
-    profiles:
-      - dashboard
-    networks:
-      - instagram-network
 
   scraper-backend:
     build: ./scraper/backend
@@ -39,25 +28,10 @@ services:
     networks:
       - instagram-network
 
-  scraper-frontend:
-    build: ./scraper/frontend
-    ports:
-      - "5173:5173"
-    environment:
-      - VITE_API_URL=http://scraper-backend:8000
-      - NODE_ENV=development
-    volumes:
-      - scraper_frontend_svelte_kit:/app/.svelte-kit
-    depends_on:
-      - scraper-backend
-    profiles:
-      - scraper-ui
-    networks:
-      - instagram-network
+# Ya no se necesita volumen para scraper_frontend
 
 volumes:
   scraper_backend_data:
-  scraper_frontend_svelte_kit:
 
 networks:
   instagram-network:
