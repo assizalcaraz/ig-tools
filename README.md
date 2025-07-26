@@ -1,187 +1,193 @@
-# Instagram Tools - Sistema Integrado
+# Instagram Tools - Sistema Modular
 
-Este proyecto integra el Dashboard Web y el Scraper de Instagram en un sistema unificado usando Docker Compose.
+Sistema modular para análisis de datos de Instagram con dashboard y scraper independientes.
 
 ## 🏗️ Arquitectura
 
-```
-Instagram Tools/
-├── dashboard_web/          # Dashboard principal
-├── scraper/               # Scraper con backend Django y frontend SvelteKit
-├── docker-compose.yaml    # Configuración principal
-├── nginx.conf            # Proxy reverso
-└── env.example           # Variables de entorno
-```
+### Módulos Disponibles
 
-## 🚀 Servicios
+- **Dashboard**: Visualización y análisis de datos de Instagram
+- **Scraper**: Herramienta de scraping con backend Django y frontend SvelteKit
+- **App Shell**: Navegación integrada para acceder a todos los módulos
 
-### App Shell (Integradora Principal)
-- **Puerto**: 3000
-- **URL**: http://localhost:3000
-- **Descripción**: Aplicación integradora con navegación unificada
+### Servicios
 
-### Dashboard Web
-- **Puerto**: 5174
-- **URL**: http://localhost:5174
-- **Descripción**: Dashboard con visualización de datos
+- `app-shell`: Navegación integrada (SvelteKit)
+- `dashboard`: Frontend SvelteKit para visualización de datos
+- `scraper-backend`: API Django para scraping de Instagram
+- `scraper-frontend`: Interfaz SvelteKit para el scraper
 
-### Scraper Backend (API)
-- **Puerto**: 8000
-- **URL**: http://localhost:8000
-- **Admin**: http://localhost:8000/admin/
-- **Descripción**: API Django para scraping de Instagram
+## 🚀 Inicio Rápido
 
-### Scraper Frontend (Opcional)
-- **Puerto**: 5173
-- **URL**: http://localhost:5173
-- **Perfil**: scraper-ui
-- **Descripción**: Interfaz independiente del scraper
-
-### Nginx (Producción)
-- **Puerto**: 80
-- **URL**: http://localhost
-- **Perfil**: production
-- **Descripción**: Proxy reverso para producción
-
-## 📋 Comandos de Uso
-
-### Configuración Inicial
+### Opción 1: Makefile (Recomendado)
 ```bash
-# Copiar variables de entorno
-cp env.example .env
+# Iniciar en modo desarrollo (App Shell + Dashboard + Scraper)
+make up-dev
 
-# Editar configuración si es necesario
-nano .env
+# Ver otros comandos disponibles
+make help
 ```
 
-### Desarrollo (Dashboard + Backend)
+### Opción 2: Script Interactivo
 ```bash
-# Iniciar servicios principales
-docker compose up -d
-
-# Ver logs
-docker compose logs -f
-
-# Ver logs de un servicio específico
-docker compose logs -f dashboard
-docker compose logs -f scraper-backend
+chmod +x start.sh
+./start.sh
 ```
 
-### Desarrollo Completo (incluye Scraper Frontend)
+### Opción 3: Comandos Directos
+
 ```bash
-# Iniciar todos los servicios incluyendo scraper frontend
-docker compose --profile scraper-ui up -d
+# Solo Dashboard
+docker compose --profile dashboard up -d
+
+# Solo Scraper (Backend + Frontend)
+docker compose --profile scraper --profile scraper-ui up -d
+
+# Dashboard + Scraper completo
+docker compose --profile dashboard --profile scraper --profile scraper-ui up -d
+
+# App Shell + Dashboard + Scraper (modo desarrollo completo)
+docker compose --profile shell --profile dashboard --profile scraper --profile scraper-ui up -d
 ```
-
-### Producción (con Nginx)
-```bash
-# Iniciar con proxy reverso
-docker compose --profile production up -d
-```
-
-### Gestión de Contenedores
-```bash
-# Detener servicios
-docker compose down
-
-# Reconstruir imágenes
-docker compose build
-
-# Reconstruir y reiniciar
-docker compose up --build -d
-
-# Limpiar volúmenes
-docker compose down -v
-```
-
-## 🔗 Conexiones
-
-### Dashboard → Scraper Backend
-- El dashboard se conecta al backend del scraper via `VITE_SCRAPER_API_URL`
-- URL interna: `http://scraper-backend:8000`
-- URL externa: `http://localhost:8000`
-
-### Scraper Frontend → Scraper Backend
-- El frontend del scraper se conecta a su propio backend
-- URL interna: `http://scraper-backend:8000`
-- URL externa: `http://localhost:8000`
 
 ## 🌐 URLs de Acceso
 
-### Desarrollo
-- **App Shell (Principal)**: http://localhost:3000
+- **App Shell (navegación integrada)**: http://localhost:3000
 - **Dashboard**: http://localhost:5174
+- **Scraper Frontend**: http://localhost:5173/scraper
 - **Scraper Backend API**: http://localhost:8000
-- **Scraper Admin**: http://localhost:8000/admin/
-- **Scraper Frontend**: http://localhost:5173 (con perfil scraper-ui)
 
-### Producción (con Nginx)
-- **Dashboard**: http://localhost
-- **API**: http://localhost/api/
-- **Admin**: http://localhost/admin/
-- **Scraper UI**: http://localhost/scraper/
+## 📋 Perfiles Disponibles
 
-## 📁 Variables de Entorno
+- `shell`: App Shell (navegación integrada)
+- `dashboard`: Solo el dashboard de visualización
+- `scraper`: Backend del scraper (Django API)
+- `scraper-ui`: Frontend del scraper (SvelteKit)
 
-### Dashboard
-- `VITE_SCRAPER_API_URL`: URL del backend del scraper
+## 🔧 Comandos Makefile
 
-### Scraper Backend
-- `DEBUG`: True/False
-- `SECRET_KEY`: Clave secreta de Django
-- `CORS_ALLOWED_ORIGINS`: Orígenes permitidos para CORS
-- `DATABASE_URL`: URL de la base de datos
-- `TIME_ZONE`: Zona horaria
-- `LANGUAGE_CODE`: Código de idioma
-
-### Scraper Frontend
-- `VITE_API_URL`: URL del backend
-- `NODE_ENV`: Entorno de Node.js
-
-## 🔧 Perfiles Disponibles
-
-### `scraper-ui`
-Incluye el frontend del scraper:
 ```bash
-docker compose --profile scraper-ui up -d
+make up-dev    # Iniciar en modo desarrollo (App Shell + Dashboard + Scraper)
+make down      # Detener todos los servicios
+make logs      # Ver logs de todos los servicios
+make ps        # Ver estado de los servicios
+make build     # Reconstruir todas las imágenes
+make clean     # Limpiar contenedores y volúmenes
+make help      # Mostrar ayuda
 ```
 
-### `production`
-Incluye Nginx como proxy reverso:
-```bash
-docker compose --profile production up -d
+## 📁 Estructura del Proyecto
+
+```
+Instagram_Tools/
+├── app-shell/           # Navegación integrada (SvelteKit)
+├── dashboard_web/       # Dashboard SvelteKit
+├── scraper/            # Módulo Scraper
+│   ├── backend/        # Django API
+│   └── frontend/       # SvelteKit UI
+├── docker-compose.yaml # Configuración Docker
+├── Makefile           # Comandos de desarrollo
+├── start.sh           # Script de inicio interactivo
+└── README.md          # Documentación
 ```
 
-## 📊 Volúmenes
+## 🔌 Variables de Entorno
 
-- `scraper_backend_data`: Base de datos del scraper
-- `scraper_frontend_svelte_kit`: Archivos generados por SvelteKit
+Copia `env.example` a `.env` y configura:
 
-## 🌐 Redes
-
-- `instagram-network`: Red interna para comunicación entre servicios
-
-## 🔍 Troubleshooting
-
-### Si el dashboard no puede conectar con el scraper:
-1. Verifica que el scraper-backend esté corriendo: `docker compose logs scraper-backend`
-2. Verifica la variable `VITE_SCRAPER_API_URL` en el dashboard
-3. Asegúrate de que CORS esté configurado correctamente
-
-### Si hay problemas con CORS:
-1. Verifica que `CORS_ALLOWED_ORIGINS` incluya las URLs correctas
-2. Reinicia el contenedor del backend: `docker compose restart scraper-backend`
-
-### Para reiniciar desde cero:
 ```bash
-docker compose down -v
-docker compose build --no-cache
-docker compose up -d
+# Dashboard
+VITE_SCRAPER_API_URL=http://scraper-backend:8000
+
+# Scraper Backend
+DEBUG=True
+SECRET_KEY=your-secret-key-here
+CORS_ALLOWED_ORIGINS=http://localhost:5174,http://127.0.0.1:5174,http://dashboard:5173,http://localhost:5173,http://127.0.0.1:5173,http://scraper-frontend:5173
+
+# Scraper Frontend
+VITE_API_URL=http://scraper-backend:8000
+NODE_ENV=development
 ```
 
-## 🚀 Próximos Pasos
+## 🛠️ Desarrollo
 
-1. **Configurar el dashboard** para usar la API del scraper
-2. **Implementar autenticación** entre servicios
-3. **Configurar SSL** para producción
-4. **Agregar monitoreo** y logs centralizados 
+### Inicio Rápido
+```bash
+# Iniciar todo el sistema
+make up-dev
+
+# Ver logs
+make logs
+
+# Detener
+make down
+```
+
+### Desarrollo Individual
+
+#### Dashboard
+```bash
+cd dashboard_web
+npm install
+npm run dev
+```
+
+#### Scraper Backend
+```bash
+cd scraper/backend
+pip install -r requirements.txt
+python manage.py runserver
+```
+
+#### Scraper Frontend
+```bash
+cd scraper/frontend
+npm install
+npm run dev
+```
+
+## 🔍 Solución de Problemas
+
+### Error de Conexión
+Si el dashboard no puede conectar con el scraper:
+1. Verifica que ambos servicios estén ejecutándose: `make ps`
+2. Revisa los logs: `make logs`
+3. Asegúrate de que las variables de entorno estén correctas
+
+### Error de Puerto
+Si hay conflictos de puertos:
+```bash
+# Detener todos los contenedores
+make down
+
+# Limpiar contenedores huérfanos
+make clean
+```
+
+### Reconstruir Imágenes
+```bash
+make build
+```
+
+### Problemas con App Shell
+Si el app-shell no puede acceder a las apps:
+1. Verifica que todos los servicios estén ejecutándose
+2. Asegúrate de usar `make up-dev` para iniciar todo el sistema
+3. Revisa los logs del app-shell: `docker compose logs app-shell`
+
+## 📝 Notas
+
+- Cada módulo es completamente independiente
+- Los servicios se comunican a través de la red Docker
+- El dashboard puede conectarse al scraper para funcionalidades integradas
+- El app-shell proporciona navegación integrada para todos los módulos
+- Usa `make up-dev` para el desarrollo más rápido
+- El script `start.sh` permite selección interactiva de módulos
+
+## 🚀 Flujo de Trabajo Recomendado
+
+1. **Desarrollo**: `make up-dev`
+2. **Ver logs**: `make logs`
+3. **Ver estado**: `make ps`
+4. **Detener**: `make down`
+5. **Limpiar**: `make clean` 

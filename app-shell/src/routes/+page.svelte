@@ -44,51 +44,9 @@
 				<ArrowRight size={16} />
 			</a>
 		</div>
-
-		<div class="feature-card">
-			<div class="feature-icon">
-				<Zap size={32} />
-			</div>
-			<h3>Análisis Avanzado</h3>
-			<p>Obtén insights detallados sobre seguidores y engagement</p>
-			<a href="/dashboard" class="feature-link">
-				Ver Análisis
-				<ArrowRight size={16} />
-			</a>
-		</div>
-
-		<div class="feature-card">
-			<div class="feature-icon">
-				<Users size={32} />
-			</div>
-			<h3>Gestión de Usuarios</h3>
-			<p>Administra y analiza tu audiencia de Instagram</p>
-			<a href="/dashboard" class="feature-link">
-				Gestionar Usuarios
-				<ArrowRight size={16} />
-			</a>
-		</div>
 	</div>
 
-	<div class="stats-section">
-		<h2>Estadísticas Rápidas</h2>
-		<div class="stats-grid">
-			<div class="stat-card">
-				<TrendingUp size={24} />
-				<div class="stat-content">
-					<h4>Dashboard Activo</h4>
-					<p>Visualización en tiempo real</p>
-				</div>
-			</div>
-			<div class="stat-card">
-				<Scissors size={24} />
-				<div class="stat-content">
-					<h4>Scraper Disponible</h4>
-					<p>Extracción automatizada</p>
-				</div>
-			</div>
-		</div>
-	</div>
+	
 </div>
 
 <style>

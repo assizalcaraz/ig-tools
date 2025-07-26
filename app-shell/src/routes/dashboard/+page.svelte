@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { Settings, RefreshCw } from 'lucide-svelte';
 
-	let iframeUrl = 'http://localhost:5174';
+	let iframeUrl = 'http://dashboard:5173';
 	let isLoading = true;
 	let hasError = false;
 

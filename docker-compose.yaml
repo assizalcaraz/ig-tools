@@ -1,114 +1,59 @@
+version: '3.8'
+
 services:
-  # App Shell - Integradora Principal
   app-shell:
-    build:
-      context: ./app-shell
-      dockerfile: Dockerfile
-    container_name: instagram-app-shell
+    build: ./app-shell
     ports:
       - "3000:3000"
-    volumes:
-      - ./app-shell:/app
-      - /app/node_modules
     environment:
       - NODE_ENV=development
+    profiles:
+      - shell
     networks:
       - instagram-network
-    restart: unless-stopped
     command: npm run dev -- --host 0.0.0.0 --port 3000
 
-  # Dashboard Web - Frontend
   dashboard:
-    build:
-      context: ./dashboard_web
-      dockerfile: Dockerfile
-    container_name: instagram-dashboard
+    build: ./dashboard_web
     ports:
       - "5174:5173"
-    volumes:
-      - ./dashboard_web:/app
-      - /app/node_modules
     environment:
-      - NODE_ENV=development
       - VITE_SCRAPER_API_URL=http://scraper-backend:8000
+    profiles:
+      - dashboard
     networks:
       - instagram-network
-    restart: unless-stopped
-    depends_on:
-      - scraper-backend
-    command: npm run dev -- --host 0.0.0.0 --port 5173
 
-  # Scraper Backend - Django API
   scraper-backend:
-    build:
-      context: ./scraper/backend
-      dockerfile: Dockerfile
-    container_name: instagram-scraper-backend
+    build: ./scraper/backend
     ports:
       - "8000:8000"
-    volumes:
-      - ./scraper/backend:/app
-      - scraper_backend_data:/app/data
-    env_file:
-      - ./scraper/.env
     environment:
-      - DEBUG=${DEBUG:-True}
-      - DJANGO_SETTINGS_MODULE=${DJANGO_SETTINGS_MODULE:-instagram_scraper.settings}
-      - SECRET_KEY=${SECRET_KEY:-django-insecure-your-secret-key-here}
-      - DATABASE_URL=${DATABASE_URL:-sqlite:///app/data/db.sqlite3}
-      - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS:-http://localhost:5174,http://127.0.0.1:5174,http://dashboard:5173}
-      - TIME_ZONE=${TIME_ZONE:-America/Argentina/Buenos_Aires}
-      - LANGUAGE_CODE=${LANGUAGE_CODE:-es-es}
+      - DEBUG=True
+      - SECRET_KEY=your-secret-key-here
+      - CORS_ALLOWED_ORIGINS=http://localhost:5174,http://127.0.0.1:5174,http://dashboard:5173,http://localhost:5173,http://127.0.0.1:5173,http://scraper-frontend:5173
+    volumes:
+      - scraper_backend_data:/app/data
+    profiles:
+      - scraper
     networks:
       - instagram-network
-    restart: unless-stopped
-    command: python manage.py runserver 0.0.0.0:8000
 
-  # Scraper Frontend - SvelteKit (opcional)
   scraper-frontend:
-    build:
-      context: ./scraper/frontend
-      dockerfile: Dockerfile
-    container_name: instagram-scraper-frontend
+    build: ./scraper/frontend
     ports:
       - "5173:5173"
-    volumes:
-      - ./scraper/frontend/src:/app/src
-      - ./scraper/frontend/static:/app/static
-      - ./scraper/frontend/svelte.config.js:/app/svelte.config.js
-      - ./scraper/frontend/vite.config.js:/app/vite.config.js
-      - ./scraper/frontend/tsconfig.json:/app/tsconfig.json
-      - ./scraper/frontend/package.json:/app/package.json
-      - scraper_frontend_svelte_kit:/app/.svelte-kit
-    env_file:
-      - ./scraper/.env
     environment:
-      - VITE_API_URL=${VITE_API_URL:-http://scraper-backend:8000}
-      - NODE_ENV=${NODE_ENV:-development}
-    networks:
-      - instagram-network
-    restart: unless-stopped
+      - VITE_API_URL=http://scraper-backend:8000
+      - NODE_ENV=development
+    volumes:
+      - scraper_frontend_svelte_kit:/app/.svelte-kit
     depends_on:
       - scraper-backend
     profiles:
       - scraper-ui
-
-  # Nginx reverse proxy (opcional para producción)
-  nginx:
-    image: nginx:alpine
-    container_name: instagram-nginx
-    ports:
-      - "80:80"
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
     networks:
       - instagram-network
-    depends_on:
-      - dashboard
-      - scraper-backend
-    restart: unless-stopped
-    profiles:
-      - production
 
 volumes:
   scraper_backend_data:

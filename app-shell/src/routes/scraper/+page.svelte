@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { Settings, RefreshCw } from 'lucide-svelte';
 
-	let iframeUrl = 'http://localhost:5173';
+	let iframeUrl = 'http://scraper-frontend:5173/scraper';
 	let isLoading = true;
 	let hasError = false;
 
