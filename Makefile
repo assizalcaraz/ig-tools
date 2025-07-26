@@ -1,14 +1,15 @@
 # Makefile para Instagram Tools
 # Comandos de desarrollo y producción
 
-.PHONY: help up-dev down logs ps build clean rebuild fresh-build
+.PHONY: help up-dev up-dev-f down logs ps build clean rebuild fresh-build
 
 # Comando por defecto
 help:
 	@echo "🚀 Instagram Tools - Comandos disponibles:"
 	@echo ""
 	@echo "📋 Desarrollo:"
-	@echo "  make up-dev      - Inicia en modo desarrollo (App Shell + todos los módulos)"
+	@echo "  make up-dev       - Inicia en modo desarrollo (sin caché si se usa up-dev-f)"
+	@echo "  make up-dev-f     - Purga todo, reconstruye e inicia"
 	@echo "  make build       - Construye todas las imágenes Docker"
 	@echo "  make rebuild     - Reconstruye todas las imágenes sin cache"
 	@echo "  make fresh-build - Build completo con npm install y reconstrucción"
@@ -101,3 +102,7 @@ clean:
 	@docker compose down -v
 	@docker system prune -f
 	@echo "✅ Limpieza completada" 
+
+# Desarrollo forzado: limpia todo y levanta
+up-dev-f: clean rebuild up-dev
+	@echo "♻️  Sistema purgado y reconstruido. Servicios ejecutándose." 

@@ -1,7 +1,7 @@
 import type { DashboardData } from '$lib/types/instagram';
 
 class InstagramDataLoader {
-	private dataPath = '';
+	private dataPath = '/data';
 
 	async loadFollowers(): Promise<any[]> {
 		try {
