@@ -1,14 +1,35 @@
-.PHONY: up-dev down logs ps build clean help
+# Makefile para Instagram Tools
+# Comandos de desarrollo y producción
 
-# Variables
-SHELL := /bin/bash
+.PHONY: help up-dev down logs ps build clean rebuild fresh-build
 
-# Comando principal para desarrollo
+# Comando por defecto
+help:
+	@echo "🚀 Instagram Tools - Comandos disponibles:"
+	@echo ""
+	@echo "📋 Desarrollo:"
+	@echo "  make up-dev      - Inicia en modo desarrollo (App Shell + todos los módulos)"
+	@echo "  make build       - Construye todas las imágenes Docker"
+	@echo "  make rebuild     - Reconstruye todas las imágenes sin cache"
+	@echo "  make fresh-build - Build completo con npm install y reconstrucción"
+	@echo ""
+	@echo "🔧 Gestión:"
+	@echo "  make down        - Detiene todos los servicios"
+	@echo "  make logs        - Muestra logs en tiempo real"
+	@echo "  make ps          - Muestra estado de los servicios"
+	@echo "  make clean       - Limpia contenedores y volúmenes"
+	@echo ""
+	@echo "🌐 URLs disponibles:"
+	@echo "  App Shell: http://localhost:3000"
+	@echo "  Dashboard: http://localhost:5174"
+	@echo "  Scraper: http://localhost:5173/scraper"
+	@echo "  API Scraper: http://localhost:8000"
+
+# Inicio rápido en modo desarrollo
 up-dev:
 	@echo "🚀 Iniciando Instagram Tools en modo desarrollo..."
 	@echo "📋 Perfiles: App Shell + Dashboard + Scraper"
-	@echo ""
-	docker compose --profile shell --profile dashboard --profile scraper --profile scraper-ui up -d
+	@docker compose --profile shell --profile dashboard --profile scraper --profile scraper-ui up -d
 	@echo ""
 	@echo "✅ Servicios iniciados correctamente!"
 	@echo ""
@@ -17,51 +38,66 @@ up-dev:
 	@echo "   Dashboard: http://localhost:5174"
 	@echo "   Scraper: http://localhost:5173/scraper"
 	@echo "   API Scraper: http://localhost:8000"
-	@echo ""
 
-# Detener todos los servicios
+# Detener servicios
 down:
-	@echo "🛑 Deteniendo todos los servicios..."
-	docker compose down
+	@echo "🛑 Deteniendo servicios..."
+	@docker compose down
 	@echo "✅ Servicios detenidos"
 
-# Ver logs de todos los servicios
+# Ver logs
 logs:
-	@echo "📋 Mostrando logs de todos los servicios..."
-	docker compose logs -f
+	@echo "📋 Mostrando logs en tiempo real..."
+	@docker compose logs -f
 
-# Ver estado de los servicios
+# Estado de servicios
 ps:
 	@echo "📊 Estado de los servicios:"
-	docker compose ps
+	@docker compose ps
 
-# Reconstruir todas las imágenes
+# Construir imágenes
 build:
-	@echo "🔨 Reconstruyendo todas las imágenes..."
-	docker compose build --no-cache
-	@echo "✅ Imágenes reconstruidas"
+	@echo "🔨 Construyendo todas las imágenes..."
+	@docker compose build --no-cache
+	@echo "✅ Imágenes construidas"
 
-# Limpiar contenedores y volúmenes
-clean:
-	@echo "🧹 Limpiando contenedores y volúmenes..."
-	docker compose down -v
-	docker system prune -f
-	@echo "✅ Limpieza completada"
+# Reconstruir sin cache
+rebuild:
+	@echo "🔄 Reconstruyendo todas las imágenes sin cache..."
+	@docker compose build --no-cache
+	@echo "✅ Reconstrucción completada"
 
-# Mostrar ayuda
-help:
-	@echo "📖 Instagram Tools - Comandos disponibles:"
+# Build completo con npm install
+fresh-build:
+	@echo "🧹 Limpiando contenedores anteriores..."
+	@docker compose down -v
+	@docker system prune -f
 	@echo ""
-	@echo "  make up-dev    - Iniciar en modo desarrollo (App Shell + Dashboard + Scraper)"
-	@echo "  make down      - Detener todos los servicios"
-	@echo "  make logs      - Ver logs de todos los servicios"
-	@echo "  make ps        - Ver estado de los servicios"
-	@echo "  make build     - Reconstruir todas las imágenes"
-	@echo "  make clean     - Limpiar contenedores y volúmenes"
-	@echo "  make help      - Mostrar esta ayuda"
+	@echo "📦 Instalando dependencias y construyendo..."
+	@echo "   - Dashboard..."
+	@docker run --rm -v $(PWD)/dashboard_web:/app -w /app node:18 npm install
+	@echo "   - Scraper Frontend..."
+	@docker run --rm -v $(PWD)/scraper/frontend:/app -w /app node:18 npm install
+	@echo "   - App Shell..."
+	@docker run --rm -v $(PWD)/app-shell:/app -w /app node:18 npm install
 	@echo ""
-	@echo "🌐 URLs de acceso:"
+	@echo "🔨 Construyendo imágenes Docker..."
+	@docker compose build --no-cache
+	@echo ""
+	@echo "🚀 Iniciando servicios..."
+	@docker compose --profile shell --profile dashboard --profile scraper --profile scraper-ui up -d
+	@echo ""
+	@echo "✅ Build completo finalizado!"
+	@echo ""
+	@echo "🌐 URLs disponibles:"
 	@echo "   App Shell: http://localhost:3000"
 	@echo "   Dashboard: http://localhost:5174"
 	@echo "   Scraper: http://localhost:5173/scraper"
-	@echo "   API Scraper: http://localhost:8000" 
+	@echo "   API Scraper: http://localhost:8000"
+
+# Limpiar todo
+clean:
+	@echo "🧹 Limpiando contenedores y volúmenes..."
+	@docker compose down -v
+	@docker system prune -f
+	@echo "✅ Limpieza completada" 
