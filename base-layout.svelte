@@ -1,5 +1,6 @@
 <script>
   import { stylesConfig } from './styles-config.js';
+  import './shared-styles.css';
   
   export let title = 'Instagram Tools';
   export let showHeader = true;
@@ -212,140 +213,6 @@
     margin-left: 250px;
   }
   
-  /* Estilos base */
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-  
-  html {
-    font-family: var(--font-family);
-    line-height: 1.6;
-    color: var(--text-primary);
-    background-color: var(--bg-primary);
-  }
-  
-  body {
-    margin: 0;
-    padding: 0;
-    font-size: var(--font-size-base);
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
-  }
-  
-  /* Mejoras de accesibilidad */
-  :focus {
-    outline: 2px solid var(--primary-color);
-    outline-offset: 2px;
-  }
-  
-  /* Estilos para inputs */
-  input, textarea, select {
-    font-family: inherit;
-    font-size: inherit;
-    line-height: inherit;
-    padding: var(--spacing-sm) var(--spacing-md);
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius);
-    background-color: var(--surface-color);
-    color: var(--text-primary);
-    transition: border-color var(--transition-fast);
-  }
-  
-  input:focus, textarea:focus, select:focus {
-    border-color: var(--primary-color);
-    outline: none;
-  }
-  
-  /* Estilos para botones */
-  button {
-    font-family: inherit;
-    cursor: pointer;
-    border: none;
-    background: none;
-    padding: 0;
-    margin: 0;
-    transition: all var(--transition-fast);
-  }
-  
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-    padding: var(--spacing-sm) var(--spacing-lg);
-    border: none;
-    border-radius: var(--border-radius);
-    font-weight: 500;
-    cursor: pointer;
-    transition: all var(--transition-normal);
-    text-decoration: none;
-    font-size: var(--font-size-sm);
-  }
-  
-  .btn-primary {
-    background-color: var(--primary-color);
-    color: white;
-  }
-  
-  .btn-primary:hover {
-    background-color: var(--primary-hover);
-  }
-  
-  .btn-secondary {
-    background-color: transparent;
-    color: var(--primary-color);
-    border: 1px solid var(--primary-color);
-  }
-  
-  .btn-secondary:hover {
-    background-color: var(--primary-color);
-    color: white;
-  }
-  
-  /* Estilos para enlaces */
-  a {
-    color: var(--primary-color);
-    text-decoration: none;
-    transition: color var(--transition-fast);
-  }
-  
-  a:hover {
-    color: var(--primary-hover);
-  }
-  
-  /* Card component */
-  .card {
-    background-color: var(--surface-color);
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
-    padding: var(--spacing-lg);
-    margin-bottom: var(--spacing-md);
-    border: 1px solid var(--border-light);
-  }
-  
-  /* Container */
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 var(--spacing-md);
-  }
-  
-  /* Loading spinner */
-  .loading-spinner {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border: 2px solid var(--border-color);
-    border-radius: 50%;
-    border-top-color: var(--primary-color);
-    animation: spin 1s ease-in-out infinite;
-  }
-  
-  @keyframes spin {
-    to { transform: rotate(360deg); }
-  }
-  
   /* Responsive */
   @media (max-width: 768px) {
     .sidebar {
@@ -362,14 +229,6 @@
     
     .layout-container {
       flex-direction: column;
-    }
-    
-    .container {
-      padding: 0 var(--spacing-sm);
-    }
-    
-    .card {
-      padding: var(--spacing-md);
     }
   }
 </style> 
