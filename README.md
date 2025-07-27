@@ -1,3 +1,8 @@
+## 📸 Capturas de Pantalla
+
+![Preview 1](img/dashboard_preview1.png)
+![Preview 2](img/dashboard_preview3.png) 
+
 # Instagram Tools - Sistema Modular
 
 Sistema modular para análisis de datos de Instagram con dashboard y scraper independientes.
@@ -209,16 +214,3 @@ Si el app-shell no puede acceder a las apps:
 4. **Detener**: `make down`
 5. **Limpiar**: `make clean` 
 
-## 📸 Capturas de Pantalla
-
-| Vista general | Tarjetas | Listas |
-|---------------|----------|--------|
-| ![Dashboard Overview](dashboard_web/static/img/dashboard_overview.png) | ![Dashboard Cards](dashboard_web/static/img/dashboard_cards.png) | ![Dashboard Lists](dashboard_web/static/img/dashboard_lists.png) | 
-
-## 🖼️ Previews Adicionales
-
-![Preview 1](img/dashboard_preview1.png)
-
-![Preview 2](img/dashboard_preview2.png)
-
-![Preview 3](img/dashboard_preview3.png) 
