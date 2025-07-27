@@ -1,0 +1,12 @@
+# Raíz - reglas generales
+
+# Archivos de entorno
+.env
+*.env
+
+# Datos sensibles de Instagram
+app-shell/static/data/
+dashboard_web/static/data/
+
+# Directorios de dependencias
+node_modules/ 

@@ -178,7 +178,20 @@
 	}
 
 	.user-item:hover {
-		background: #f0f0f0;
+		background: var(--surface-hover, #2d2d2d);
+		color: var(--hover-text-color, #ffffff) !important;
+	}
+
+	.user-item:hover *,
+	.user-item:hover svg {
+		color: var(--hover-text-color, #ffffff) !important;
+		fill: var(--hover-text-color, #ffffff) !important;
+		opacity: 1 !important;
+	}
+
+	.user-item:hover .username,
+	.user-item:hover .user-date {
+		font-weight: 600;
 	}
 
 	.user-item.mutual {

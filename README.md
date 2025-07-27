@@ -208,3 +208,9 @@ Si el app-shell no puede acceder a las apps:
 3. **Ver estado**: `make ps`
 4. **Detener**: `make down`
 5. **Limpiar**: `make clean` 
+
+## 📸 Capturas de Pantalla
+
+| Vista general | Tarjetas | Listas |
+|---------------|----------|--------|
+| ![Dashboard Overview](dashboard_web/static/img/dashboard_overview.png) | ![Dashboard Cards](dashboard_web/static/img/dashboard_cards.png) | ![Dashboard Lists](dashboard_web/static/img/dashboard_lists.png) | 

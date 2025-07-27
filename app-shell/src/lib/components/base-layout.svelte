@@ -176,9 +176,25 @@
 </div>
 
 <style>
+  :root {
+    /* Gradiente por defecto para tema claro */
+    --app-bg-gradient: linear-gradient(135deg, #ffffff 0%, #f5f7ff 100%);
+    --hover-text-color: #262626; /* texto oscuro en hover para tema claro */
+  }
+
+  /* Gradiente y colores para tema oscuro basado en atributo data-theme */
+  :global([data-theme='dark']) {
+    --app-bg-gradient: linear-gradient(135deg, #0f0f0f 0%, #1c1c1c 100%);
+    /* Ajustes de superficie para contraste adecuado */
+    --surface-hover: #333333;
+    --surface-color: #1f1f1f;
+    --border-color: #3d3d3d;
+    --hover-text-color: #ffffff; /* texto claro en hover para tema oscuro */
+  }
+
   .base-layout {
     min-height: 100vh;
-    background-color: var(--bg-primary);
+    background: var(--app-bg-gradient);
     color: var(--text-primary);
     font-family: var(--font-family);
   }
