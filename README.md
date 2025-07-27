@@ -214,3 +214,11 @@ Si el app-shell no puede acceder a las apps:
 | Vista general | Tarjetas | Listas |
 |---------------|----------|--------|
 | ![Dashboard Overview](dashboard_web/static/img/dashboard_overview.png) | ![Dashboard Cards](dashboard_web/static/img/dashboard_cards.png) | ![Dashboard Lists](dashboard_web/static/img/dashboard_lists.png) | 
+
+## 🖼️ Previews Adicionales
+
+![Preview 1](img/dashboard_preview1.png)
+
+![Preview 2](img/dashboard_preview2.png)
+
+![Preview 3](img/dashboard_preview3.png) 
